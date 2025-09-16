@@ -1,0 +1,12 @@
+# Binarios
+huffman_tool
+*.o
+
+# Archivos temporales
+*.swp
+*.tmp
+*.log
+
+# Archivos de salida de compresión
+*.HUB
+*.HUB.txt

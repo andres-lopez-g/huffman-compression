@@ -1,0 +1,6 @@
+Este es un archivo de prueba para comprobar la compresión Huffman.
+El algoritmo de Huffman es un método de compresión sin pérdida que utiliza códigos de longitud variable.
+Los caracteres más frecuentes reciben códigos más cortos, mientras que los menos frecuentes reciben códigos más largos.
+Esto permite una compresión efectiva del texto, reduciendo significativamente el tamaño del archivo original.
+El archivo resultante debe ser considerablemente más pequeño que el original.
+¡Probemos la efectividad de nuestro compresor Huffman!

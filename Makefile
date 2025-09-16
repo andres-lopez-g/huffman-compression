@@ -1,21 +1,22 @@
-CXX := g++
-CXXFLAGS := -std=c++17 -O2 -Wall -Wextra -Wpedantic
-SRC_DIR := src
-OBJS := $(SRC_DIR)/main.o $(SRC_DIR)/huffman.o
-BIN := huffman_tool
-
-all: $(BIN)
-
-$(BIN): $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $@ $^
-
-$(SRC_DIR)/main.o: $(SRC_DIR)/main.cpp $(SRC_DIR)/huffman.hpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-$(SRC_DIR)/huffman.o: $(SRC_DIR)/huffman.cpp $(SRC_DIR)/huffman.hpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-clean:
-	rm -f $(OBJS) $(BIN)
+# Makefile simplificado para C++
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall -Wextra -O2
+SRC_DIR = src
+SOURCES = $(SRC_DIR)/main.cpp $(SRC_DIR)/huffman.cpp
+TARGET = huffman_tool.exe
 
 .PHONY: all clean
+
+all: $(TARGET)
+
+$(TARGET): $(SOURCES)
+	$(CXX) $(CXXFLAGS) -o $@ $^
+	@echo "✅ Compilación completada: $(TARGET)"
+
+clean:
+	@if exist $(TARGET) del $(TARGET)
+	@echo "🧹 Limpieza completada"
+
+run: $(TARGET)
+	@echo "🚀 Ejecutando programa..."
+	@$(TARGET)

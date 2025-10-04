@@ -4,86 +4,118 @@
 
 void mostrarBanner() {
     std::cout << "\n";
-    std::cout << "╔══════════════════════════════════════════════════════════════╗\n";
-    std::cout << "║              🗜️  HUFFMAN COMPRESSION TOOL  🗜️               ║\n";
-    std::cout << "║                     Versión Simplificada                    ║\n";
-    std::cout << "╚══════════════════════════════════════════════════════════════╝\n";
+    std::cout << "================================================================\n";
+    std::cout << "              HUFFMAN COMPRESSION TOOL                         \n";
+    std::cout << "                   Version Simplificada                        \n";
+    std::cout << "================================================================\n";
     std::cout << "\n";
 }
 
 void mostrarMenu() {
-    std::cout << "🎯 === MENÚ PRINCIPAL ===\n\n";
-    std::cout << "1️⃣  Comprimir archivo\n";
-    std::cout << "2️⃣  Descomprimir archivo .HUB\n";
-    std::cout << "3️⃣  Mostrar ayuda\n";
-    std::cout << "4️⃣  Salir\n\n";
+    std::cout << "=== MENU PRINCIPAL ===\n\n";
+    std::cout << "1. Comprimir archivo\n";
+    std::cout << "2. Descomprimir archivo .HUB\n";
+    std::cout << "3. Mostrar ayuda\n";
+    std::cout << "4. Salir\n\n";
 }
 
 void menuComprimir() {
-    std::cout << "\n🗜️  === COMPRIMIR ARCHIVO ===\n";
-    std::cout << "📁 Ingrese la ruta del archivo a comprimir: ";
+    std::cout << "\n=== COMPRIMIR ARCHIVO ===\n";
+    std::cout << "Ingrese la ruta del archivo a comprimir: ";
     
     std::string ruta;
     std::getline(std::cin, ruta);
     
     if (ruta.empty()) {
-        std::cout << "❌ Ruta vacía. Operación cancelada.\n";
+        std::cout << "Error: Ruta vacia. Operacion cancelada.\n";
         return;
     }
 
-    // Remover comillas si están presentes
+    // Remover comillas si estan presentes
     if (ruta.front() == '"' && ruta.back() == '"') {
         ruta = ruta.substr(1, ruta.length() - 2);
     }
 
-    if (HuffmanCompressor::compress(ruta)) {
-        std::cout << "\n🎉 ¡Compresión exitosa!\n";
+    // Preguntar por nombre personalizado
+    std::cout << "\nDesea especificar un nombre para el archivo comprimido? (s/n): ";
+    std::string respuesta;
+    std::getline(std::cin, respuesta);
+    
+    std::string nombreSalida = "";
+    if (respuesta == "s" || respuesta == "S") {
+        std::cout << "Ingrese el nombre del archivo de salida (sin extension): ";
+        std::getline(std::cin, nombreSalida);
+        
+        if (!nombreSalida.empty()) {
+            // Agregar extension .HUB si no la tiene
+            if (nombreSalida.length() < 4 || nombreSalida.substr(nombreSalida.length() - 4) != ".HUB") {
+                nombreSalida += ".HUB";
+            }
+        }
+    }
+
+    if (HuffmanCompressor::compress(ruta, nombreSalida)) {
+        std::cout << "\nCompresion exitosa!\n";
     } else {
-        std::cout << "\n💥 Error durante la compresión.\n";
+        std::cout << "\nError durante la compresion.\n";
     }
 }
 
 void menuDescomprimir() {
-    std::cout << "\n📤 === DESCOMPRIMIR ARCHIVO ===\n";
-    std::cout << "📁 Ingrese la ruta del archivo .HUB a descomprimir: ";
+    std::cout << "\n=== DESCOMPRIMIR ARCHIVO ===\n";
+    std::cout << "Ingrese la ruta del archivo .HUB a descomprimir: ";
     
     std::string ruta;
     std::getline(std::cin, ruta);
     
     if (ruta.empty()) {
-        std::cout << "❌ Ruta vacía. Operación cancelada.\n";
+        std::cout << "Error: Ruta vacia. Operacion cancelada.\n";
         return;
     }
 
-    // Remover comillas si están presentes
+    // Remover comillas si estan presentes
     if (ruta.front() == '"' && ruta.back() == '"') {
         ruta = ruta.substr(1, ruta.length() - 2);
     }
 
-    if (HuffmanCompressor::decompress(ruta)) {
-        std::cout << "\n🎉 ¡Descompresión exitosa!\n";
+    // Preguntar por nombre personalizado
+    std::cout << "\nDesea especificar un nombre para el archivo descomprimido? (s/n): ";
+    std::string respuesta;
+    std::getline(std::cin, respuesta);
+    
+    std::string nombreSalida = "";
+    if (respuesta == "s" || respuesta == "S") {
+        std::cout << "Ingrese el nombre del archivo de salida (con extension): ";
+        std::getline(std::cin, nombreSalida);
+    }
+
+    if (HuffmanCompressor::decompress(ruta, nombreSalida)) {
+        std::cout << "\nDescompresion exitosa!\n";
     } else {
-        std::cout << "\n💥 Error durante la descompresión.\n";
+        std::cout << "\nError durante la descompresion.\n";
     }
 }
 
 void mostrarAyuda() {
-    std::cout << "\n❓ === AYUDA ===\n\n";
-    std::cout << "📝 Instrucciones de uso:\n\n";
-    std::cout << "🗜️  COMPRESIÓN:\n";
-    std::cout << "   • Seleccione la opción 1 del menú\n";
-    std::cout << "   • Ingrese la ruta completa del archivo\n";
-    std::cout << "   • El archivo comprimido se guardará con extensión .HUB\n\n";
+    std::cout << "\n=== AYUDA ===\n\n";
+    std::cout << "Instrucciones de uso:\n\n";
+    std::cout << "COMPRESION:\n";
+    std::cout << "   - Seleccione la opcion 1 del menu\n";
+    std::cout << "   - Ingrese la ruta completa del archivo\n";
+    std::cout << "   - Opcionalmente, especifique un nombre personalizado\n";
+    std::cout << "   - El archivo comprimido se guardara con extension .HUB\n\n";
     
-    std::cout << "📤 DESCOMPRESIÓN:\n";
-    std::cout << "   • Seleccione la opción 2 del menú\n";
-    std::cout << "   • Ingrese la ruta del archivo .HUB\n";
-    std::cout << "   • El archivo se descomprimirá con extensión .txt\n\n";
+    std::cout << "DESCOMPRESION:\n";
+    std::cout << "   - Seleccione la opcion 2 del menu\n";
+    std::cout << "   - Ingrese la ruta del archivo .HUB\n";
+    std::cout << "   - Opcionalmente, especifique un nombre personalizado\n";
+    std::cout << "   - El archivo se descomprimira con su extension original\n\n";
     
-    std::cout << "💡 CONSEJOS:\n";
-    std::cout << "   • Use comillas si la ruta contiene espacios\n";
-    std::cout << "   • Los archivos de texto comprimen mejor\n";
-    std::cout << "   • Archivos ya comprimidos (ZIP, JPG) pueden crecer\n\n";
+    std::cout << "CONSEJOS:\n";
+    std::cout << "   - Use comillas si la ruta contiene espacios\n";
+    std::cout << "   - Los archivos de texto comprimen mejor\n";
+    std::cout << "   - Archivos ya comprimidos (ZIP, JPG) pueden crecer\n";
+    std::cout << "   - Puede especificar rutas relativas o absolutas\n\n";
 }
 
 int main() {
@@ -93,7 +125,7 @@ int main() {
         mostrarBanner();
         mostrarMenu();
         
-        std::cout << "🔸 Seleccione una opción (1-4): ";
+        std::cout << "Seleccione una opcion (1-4): ";
         std::string opcion;
         std::getline(std::cin, opcion);
         
@@ -104,11 +136,11 @@ int main() {
         } else if (opcion == "3") {
             mostrarAyuda();
         } else if (opcion == "4") {
-            std::cout << "\n👋 ¡Gracias por usar Huffman Compression Tool!\n";
-            std::cout << "🚪 Saliendo...\n";
+            std::cout << "\nGracias por usar Huffman Compression Tool!\n";
+            std::cout << "Saliendo...\n";
             break;
         } else {
-            std::cout << "\n❌ Opción inválida. Por favor seleccione 1-4.\n";
+            std::cout << "\nOpcion invalida. Por favor seleccione 1-4.\n";
         }
         
         if (opcion != "4") {
